@@ -29,14 +29,14 @@ Lookup the station id while loading rides_fact table
 ### Airflow to schedule workflows
 
 Workflows: Airflow is used to create the workflos and set the dependencies among the tasks
-Configure email notifications on failure.
+Configured email notifications on failure in the airflow dag
 We can set the retreis option to 3 or something to retry the task before terminating especially while downloading files from web.
 
 ### Restartbility
 
-Create a batch id for each run to keep track of the daily load
-stg & cln tables will be truncate and load for each batch
-add pre-sql statements before starting the load for each stage to clean up the partial data load while rerunning the same batch again.
+Need to create a batch id for each run to keep track of the daily load
+Stg & cln tables will be truncate and load for each batch
+Add pre-sql statements before starting the load for each stage to clean up the partial data load while rerunning the same batch again.
 
 ### Containers
 Created separate containers for postgresql and airflow for this project
