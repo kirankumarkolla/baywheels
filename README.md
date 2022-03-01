@@ -26,6 +26,18 @@ Clean STage: tropdata_cln
 dw :  station_dim. (station_id, station_name, station_code,logintude,lattitude)
       rides_fact.  (ride_id,rideable_type,started_at,ended_at,start_station_id,end_stattion_id,member_casual)
       
+      DB Objects created
+      
+       Schema |            Name             |   Type   | Owner 
+--------+-----------------------------+----------+-------
+ public | load_status_ctl             | table    | admin
+ public | load_status_ctl_id_seq      | sequence | admin
+ public | rides_fact                  | table    | admin
+ public | stations_dim                | table    | admin
+ public | stations_dim_station_id_seq | sequence | admin
+ public | tripdata_cln                | table    | admin
+ public | tripdata_stg                | table    | admin
+      
 While transforming the data from cln -> dw , first get all the station related data to the dim table.
 Lookup the station id while loading rides_fact table
 
