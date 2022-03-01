@@ -29,3 +29,5 @@ dw :  station_dim. (station_id, station_name, station_code,logintude,lattitude)
 While transforming the data from cln -> dw , first get all the station related data to the dim table.
 Lookup the station id while loading rides_fact table
 
+### Containers
+Created separate containers for postgresql and airflow for this project
