@@ -20,8 +20,6 @@ services:
     environment:
       - LOAD_EX=n
       - EXECUTOR=Local
-      - AWS_ACCESS_KEY_ID=AKIAQKK25TTLORJ4QL5J
-      - AWS_SECRET_ACCESS_KEY=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
     logging:
       options:
         max-size: 10m
@@ -29,7 +27,6 @@ services:
     volumes:
       - ./dags:/usr/local/airflow/dags
       - ./src:/usr/local/airflow/src
-      - ./srcFiles:/usr/local/airflow/srcFiles
     ports:
       - "8080:8080"
     command: webserver
