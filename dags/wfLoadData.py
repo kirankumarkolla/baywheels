@@ -4,7 +4,7 @@ from airflow.operators.python_operator import PythonOperator
 from datetime import datetime
 import sys
 sys.path.append('/usr/local/airflow/')
-from src import downloadFiles,loadToStg
+from src import downloadFiles,etlFunctions
 
 
 default_args={
@@ -20,8 +20,8 @@ dag = DAG(dag_id="load",schedule_interval=None,default_args=default_args,catchup
 
   
 download_task = PythonOperator(task_id="download",python_callable=downloadFiles.downloadFiles,dag=dag)
-stgload_task = PythonOperator(task_id="stgload",python_callable=loadToStg.loadStaging,dag=dag)
-clnload_task = PythonOperator(task_id="clnload",python_callable=loadToStg.dataCleansing,dag=dag)
-dimload_task = PythonOperator(task_id="dimload",python_callable=loadToStg.stations_dim_load,dag=dag)
+stgload_task = PythonOperator(task_id="stgload",python_callable=etlFunctions.loadStaging,dag=dag)
+clnload_task = PythonOperator(task_id="clnload",python_callable=etlFunctions.dataCleansing,dag=dag)
+dimload_task = PythonOperator(task_id="dimload",python_callable=etlFunctions.stations_dim_load,dag=dag)
 
 download_task >> stgload_task >> clnload_task >> dimload_task
