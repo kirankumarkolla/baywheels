@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=baywheels
+      - POSTGRES_HOST=postgreshost
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - ./ddl/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
