@@ -3,14 +3,34 @@ import json
 from datetime import datetime
 import os,pandas as pd
 from sqlalchemy import create_engine
+from configparser import ConfigParser
 
+def config(filename='/usr/local/airflow/postgres/config/database.ini',section='postgressql'):
+    parser = ConfigParser()
+    parser.read(filename)
+    db={}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            db[param[0]] = param[1]
+    else:
+        logging.error('No db config file')
+    return db
 
 def getConn():
-    conn = psycopg2.connect(host='192.168.1.151',port='5432', dbname='baywheels',user='admin',password='admin')
-    #engine = create_engine('postgresql://admin:admin@192.168.1.151:5432/baywheels')
+    dbConfig = config()
+    #conn = psycopg2.connect(host='192.168.1.151',port='5432', dbname='baywheels',user='admin',password='admin')
+    conn = psycopg2.connect(host=dbConfig['host'],port=dbConfig['port'],dbname=dbConfig['database'],user=dbConfig['user'],password=dbConfig['password'])
+    #engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format())
     return conn
 def getEngine():
-    engine = create_engine('postgresql://admin:admin@192.168.1.151:5432/baywheels')
+    host = os.environ.get('DBHOST')
+    user = os.environ.get('DBUSER')
+    secret = os.environ.get('DBPASS')
+    port = os.environ.get('DBPORT')
+    database = os.environ.get('DBNAME')
+    #engine = create_engine('postgresql://admin:admin@192.168.1.151:5432/baywheels')
+    engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(user,secret,host,port,database))
     return engine
 
 def getBatchId():

@@ -13,13 +13,17 @@ services:
         max-file: "3"
 
   webserver:
-    build: ./dockerfiles
+    build: ./Airflow
     restart: always
     depends_on:
       - postgres
     environment:
       - LOAD_EX=n
       - EXECUTOR=Local
+      - DBHOST=192.168.1.151
+      - DBUSER=admin
+      - DBPORT=5432
+      - DBSECRET=admin
     logging:
       options:
         max-size: 10m
@@ -27,6 +31,8 @@ services:
     volumes:
       - ./dags:/usr/local/airflow/dags
       - ./src:/usr/local/airflow/src
+      - ./srcFiles:/usr/local/airflow/srcFiles
+      - ./postgres/config/database.ini:/usr/local/airflow/postgres/config/database.ini
     ports:
       - "8080:8080"
     command: webserver
